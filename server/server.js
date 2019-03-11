@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', ()=>{
-        console.log();
+        io.emit('newMessage', generateMessage(admin, 'Usuario se desconecto.'))
     });
 });
 
