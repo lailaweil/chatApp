@@ -180,11 +180,14 @@
     color: #999;
   }
   
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     * {
       font-size: 1rem;
     }
   
+    .chat__main{
+        height: 60vh; 
+    }
     .chat__sidebar {
       display: none;
     }
