@@ -22,7 +22,7 @@ jQuery('#message-form').on('submit', function(e){
         from: 'User',
         text: jQuery('[name=message]').val()
     }, function(){
-
+      jQuery('[name=message]').val('');
     });
 });
 
