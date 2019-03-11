@@ -1,4 +1,4 @@
-* {
+*:not(h3) {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -13,6 +13,7 @@
   }
   
   h3 {
+    background-color: none;
     font-weight: 600;
     text-align: center;
     font-size: 1.25rem;
@@ -187,7 +188,7 @@
     }
   
     .chat__main{
-        height: 95vh; 
+        height: 90vh; 
     }
     .chat__sidebar {
       display: none;
