@@ -5,6 +5,7 @@
     font-family: 'PT Sans Narrow', sans-serif;
     font-weight: 300;
     font-size: 1rem;
+    background-color:rgb(247, 248, 252);
   }
   
   ul, li {
@@ -186,7 +187,7 @@
     }
   
     .chat__main{
-        height: 60vh; 
+        height: 95vh; 
     }
     .chat__sidebar {
       display: none;
