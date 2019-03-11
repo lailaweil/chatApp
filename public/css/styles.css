@@ -79,7 +79,7 @@
     border: 1px solid #e1e1e1;
     padding: 10px;
   }
-  
+
   .chat {
     display: flex;
   }
@@ -180,7 +180,7 @@
     color: #999;
   }
   
-  @media (max-width: 600px) {
+  @media (max-width: 500px) {
     * {
       font-size: 1rem;
     }
