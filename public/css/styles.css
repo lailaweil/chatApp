@@ -14,9 +14,9 @@
   }
   
   h3 {
+    font-family: 'Raleway', sans-serif;
     background-color: none;
     font-weight: 600;
-    text-align: center;
     font-size: 1.25rem;
   }
   
@@ -121,21 +121,21 @@
   
   .chat__sidebar h3 {
     color: #158cdc;
-    margin: 15px 0px;
-    text-align: center;
+    margin: 15px 20px;
     letter-spacing: 1px;
   }
   
-  .chat__sidebar ul {
+  .chat__sidebar ol {
     list-style-type: none;
   }
   
   .chat__sidebar li {
+    border-radius: 25px;
     background:rgb(247, 248, 252);
-    border: 1px solid rgb(247, 248, 252);
-    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    border-radius: 25px;
     padding: 10px;
-    margin: 10px;
+    margin: 15px;
   }
   
   .chat__main {
