@@ -23,7 +23,10 @@ io.on('connection', (socket) => {
     if (!isRealString(params.name) || !isRealString(params.room)) {
       return callback('Nombre/Grupo deben ser validos.');
     }
-    params.room = params.room.toLowerCase();
+    var user = users.getUserByName(params.name); 
+    if(user && user.room === params.room){
+      return callback('Ya existe un usuario con ese nombre en este grupo.');
+    }
     socket.join(params.room);
     users.removeUser(socket.id);
     users.addUser(socket.id, params.name, params.room);
@@ -35,7 +38,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createMessage', (message, callback) => {
-    var user = users.getUser(socket.id);
+    var user = users.getUserById(socket.id);
     if(user && isRealString(message.text)){
       io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
     }
@@ -43,7 +46,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createLocationMessage', (coords) => {
-    var user = users.getUser(socket.id);
+    var user = users.getUserById(socket.id);
 
     if(user){
       io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));

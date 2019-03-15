@@ -9,7 +9,7 @@ class Users {
         return user;
     }
     removeUser (id) {
-        var user = this.getUser(id);
+        var user = this.getUserById(id);
 
         if(user){
             this.users = this.users.filter((user)=>{
@@ -18,9 +18,14 @@ class Users {
         }
         return user;
     }
-    getUser (id) {
+    getUserById (id) {
         return this.users.filter((user)=>{
             return user.id === id;
+        })[0];
+    }
+    getUserByName (name){
+        return this.users.filter((user)=>{
+            return user.name === name;
         })[0];
     }
     getUserList (room){
