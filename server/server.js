@@ -54,21 +54,7 @@ io.on('connection', (socket) => {
         return callback(err);
       } callback();
     }
-    // if (!isRealString(params.name) || !isRealString(params.room)) {
-    //   return callback('Nombre/Grupo deben ser validos.');
-    // }
-    // var user = users.getUserByName(params.name); 
-    // if(user && user.room === params.room){
-    //   return callback('Ya existe un usuario con ese nombre en este grupo.');
-    // }
-    // socket.join(params.room);
-    // users.removeUser(socket.id);
-    // users.addUser(socket.id, params.name, params.room);
-    // io.emit('updateRooms', users.getRooms());
-    // io.to(params.room).emit('updateUserList', users.getUserList(params.room));
-    // socket.emit('newMessage', generateMessage('Admin', '¡Bienvenido al chat!'));
-    // socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} se ha unido.`));
-    // callback();
+  
   });
 
   socket.on('createMessage', (message, callback) => {
