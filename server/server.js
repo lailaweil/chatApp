@@ -16,25 +16,59 @@ var users = new Users;
 
 app.use(express.static(publicPath));
 
+var joinRoom = function (name , room, socket){
+  if (!isRealString(name) || !isRealString(room)) {
+    return 'Nombre/Grupo deben ser validos.';
+  }
+  var user = users.getUserByName(name); 
+  if(user && user.room === room){
+    return 'Ya existe un usuario con ese nombre en este grupo.';
+  }
+  socket.join(room);
+  users.removeUser(socket.id);
+  users.addUser(socket.id, name, room);
+  io.emit('updateRooms', users.getRooms());
+  io.to(room).emit('updateUserList', users.getUserList(room));
+  socket.emit('newMessage', generateMessage('Admin', '¡Bienvenido al chat!'));
+  socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${name} se ha unido.`));
+  return;
+};
+
 io.on('connection', (socket) => {
   console.log('New user connected');
 
+  socket.on('renderRooms', function() {
+    socket.emit('updateRooms', users.getRooms());
+  });
+
   socket.on('join', (params, callback) => {
-    if (!isRealString(params.name) || !isRealString(params.room)) {
-      return callback('Nombre/Grupo deben ser validos.');
+    if(params.rooms){
+      console.log('existe rooms.');
+      var err = joinRoom(params.name, params.rooms, socket);
+      if(err){
+        return callback(err);
+      } callback();
+    }else{
+      var err = joinRoom(params.name, params.room, socket);
+      if(err){
+        return callback(err);
+      } callback();
     }
-    var user = users.getUserByName(params.name); 
-    if(user && user.room === params.room){
-      return callback('Ya existe un usuario con ese nombre en este grupo.');
-    }
-    socket.join(params.room);
-    users.removeUser(socket.id);
-    users.addUser(socket.id, params.name, params.room);
-   
-    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
-    socket.emit('newMessage', generateMessage('Admin', '¡Bienvenido al chat!'));
-    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} se ha unido.`));
-    callback();
+    // if (!isRealString(params.name) || !isRealString(params.room)) {
+    //   return callback('Nombre/Grupo deben ser validos.');
+    // }
+    // var user = users.getUserByName(params.name); 
+    // if(user && user.room === params.room){
+    //   return callback('Ya existe un usuario con ese nombre en este grupo.');
+    // }
+    // socket.join(params.room);
+    // users.removeUser(socket.id);
+    // users.addUser(socket.id, params.name, params.room);
+    // io.emit('updateRooms', users.getRooms());
+    // io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    // socket.emit('newMessage', generateMessage('Admin', '¡Bienvenido al chat!'));
+    // socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} se ha unido.`));
+    // callback();
   });
 
   socket.on('createMessage', (message, callback) => {
@@ -57,6 +91,7 @@ io.on('connection', (socket) => {
     var user = users.removeUser(socket.id);
 
     if(user){
+      io.emit('updateRooms', users.getRooms());
       io.to(user.room).emit('updateUserList', users.getUserList(user.room));
       io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} se ha desconectado..` ));
     }
@@ -67,3 +102,5 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
   console.log(`Server is up on ${port}`);
 });
+
+module.exports = {users}

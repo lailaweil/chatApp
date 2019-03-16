@@ -23,10 +23,25 @@
         <input type="text" name="room"/>
       </div>
       <div class="form-field">
+        
+          <select name="rooms" id="roomsSelect">
+            <option class="otherRoom" value="">Otro Grupo (escribir)</option>
+            <script id="rooms-template" type="text/template">
+              <option class="rooms" value={{room}}>{{room}}</option>
+            </script>
+          </select>
+          
+        </div>
+      <div class="form-field">
         <button>Unirse</button>
       </div>
+      
     </form>
   </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/libs/mustache.js"></script>
+  <script src="/js/libs/jquery-3.1.0.min.js"></script>
+  <script src="/js/index.js"></script>
 </body>
 
 </html>
