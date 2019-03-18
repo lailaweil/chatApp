@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
 
   socket.on('join', (params, callback) => {
     if(params.rooms){
-      console.log('existe rooms.');
+  
       var err = joinRoom(params.name, params.rooms, socket);
       if(err){
         return callback(err);

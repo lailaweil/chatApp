@@ -11,7 +11,7 @@ function scrollToBottom () {
   var newMessageHeight = newMessage.innerHeight();
   var lastMessageHeight = newMessage.prev().innerHeight();
 
-  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+  if (clientHeight + scrollTop + newMessageHeight + 4*lastMessageHeight >= scrollHeight) {
     messages.scrollTop(scrollHeight);
   }
 }
@@ -84,19 +84,19 @@ jQuery('#message-form').on('submit', function (e) {
 var locationButton = jQuery('#send-location');
 locationButton.on('click', function () {
   if (!navigator.geolocation) {
-    return alert('Geolocation not supported by your browser.');
+    return alert('Tu navegador no soporta esta opción.');
   }
 
-  locationButton.attr('disabled', 'disabled').text('Sending location...');
+  // locationButton.attr('disabled', 'disabled').text('Mandando ubicación...');
 
   navigator.geolocation.getCurrentPosition(function (position) {
-    locationButton.removeAttr('disabled').text('Send location');
+    locationButton.removeAttr('disabled').text('Mandar ubicación');
     socket.emit('createLocationMessage', {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     });
   }, function () {
-    locationButton.removeAttr('disabled').text('Send location');
-    alert('Unable to fetch location.');
+    locationButton.removeAttr('disabled').text('Mandar ubicación');
+    alert('No se pudo obtener tu ubicación.');
   });
 });
